@@ -39,7 +39,7 @@ immediately to all new subscribers.
 
 #### Defined in
 
-index.ts:66
+[index.ts:66](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L66)
 
 ___
 
@@ -59,7 +59,7 @@ also exposes a signal for its current number of subscriptions.
 
 #### Defined in
 
-index.ts:56
+[index.ts:56](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L56)
 
 ___
 
@@ -80,7 +80,7 @@ immediately to all new subscribers.
 
 #### Defined in
 
-index.ts:44
+[index.ts:44](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L44)
 
 ___
 
@@ -108,7 +108,7 @@ A simple signal that can have subscribers and emit values to them.
 
 #### Defined in
 
-index.ts:7
+[index.ts:7](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L7)
 
 ___
 
@@ -140,7 +140,7 @@ A generic subscriber that takes a value emitted by a signal as its only paramete
 
 #### Defined in
 
-index.ts:2
+[index.ts:2](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L2)
 
 ___
 
@@ -160,7 +160,7 @@ A function that's used to unsubscribe a subscriber from a signal.
 
 #### Defined in
 
-index.ts:4
+[index.ts:4](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L4)
 
 ## Functions
 
@@ -196,7 +196,7 @@ a cached signal
 
 #### Defined in
 
-index.ts:203
+[index.ts:203](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L203)
 
 ___
 
@@ -226,7 +226,7 @@ a signal
 
 #### Defined in
 
-index.ts:167
+[index.ts:167](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L167)
 
 ___
 
@@ -262,7 +262,7 @@ a simple cached signal
 
 #### Defined in
 
-index.ts:130
+[index.ts:130](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L130)
 
 ___
 
@@ -292,4 +292,4 @@ a simple signal
 
 #### Defined in
 
-index.ts:80
+[index.ts:80](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L80)
