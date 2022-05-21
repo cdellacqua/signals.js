@@ -34,7 +34,7 @@
 	},
 	"scripts": {
 		"coverage": "c8 npm run test",
-		"test": "cross-env mocha 'tests/**/*.ts'",
+		"test": "cross-env NODE_ENV=test mocha 'tests/**/*.ts'",
 		"dev:browser": "vite",
 		"dev:node": "nodemon",
 		"build": "vite build && tsc --project ./tsconfig.declarations.json",
@@ -51,7 +51,7 @@
 		"@types/mocha": "^9.0.0",
 		"@types/node": "^16.11.10",
 		"@typescript-eslint/eslint-plugin": "^5.4.0",
-		"c8": "^7.10.0",
+		"c8": "^7.11.3",
 		"chai": "^4.3.4",
 		"cross-env": "^7.0.3",
 		"eslint": "^7.32.0",
