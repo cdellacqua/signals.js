@@ -15,9 +15,7 @@
 
 - [coalesceSignals](README.md#coalescesignals)
 - [deriveSignal](README.md#derivesignal)
-- [deriveSignals](README.md#derivesignals)
 - [makeSignal](README.md#makesignal)
-- [mergeSignals](README.md#mergesignals)
 
 ## Type aliases
 
@@ -118,7 +116,7 @@ A function that's used to unsubscribe a subscriber from a signal.
 
 ### coalesceSignals
 
-▸ **coalesceSignals**<`T`\>(`signals$`): [`ReadonlySignal`](README.md#readonlysignal)<`T`[keyof `T`]\>
+▸ **coalesceSignals**<`T`\>(`signals$`): [`ReadonlySignal`](README.md#readonlysignal)<`T`[`number`]\>
 
 Coalesce multiple signals into one that will emit the latest value emitted
 by any of the source signals.
@@ -147,13 +145,13 @@ month$.emit('July'); // July
 
 #### Returns
 
-[`ReadonlySignal`](README.md#readonlysignal)<`T`[keyof `T`]\>
+[`ReadonlySignal`](README.md#readonlysignal)<`T`[`number`]\>
 
 a new signal that emits whenever one of the source signals emits.
 
 #### Defined in
 
-[composition.ts:139](https://github.com/cdellacqua/signals.js/blob/main/src/lib/composition.ts#L139)
+[composition.ts:64](https://github.com/cdellacqua/signals.js/blob/main/src/lib/composition.ts#L64)
 
 ___
 
@@ -195,50 +193,7 @@ a new signal that will emit the transformed data.
 
 #### Defined in
 
-[composition.ts:69](https://github.com/cdellacqua/signals.js/blob/main/src/lib/composition.ts#L69)
-
-___
-
-### deriveSignals
-
-▸ **deriveSignals**<`T`, `U`\>(`signals$`, `transform`): [`ReadonlySignal`](README.md#readonlysignal)<`U`\>
-
-Create a signal that emits whenever one of the passed signals emits.
-
-Example:
-```ts
-const signal1$ = makeSignal<number>();
-const signal2$ = makeSignal<number>();
-let sum = 0;
-const derived$ = deriveSignals([signal1$, signal2$], ([n1, n2]) => sum += n1 ?? n2 ?? 0);
-derived$.subscribe((v) => console.log(v));
-signal1$.emit(3); // will trigger console.log, echoing 3
-signal2$.emit(2); // will trigger console.log, echoing 5
-```
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `unknown`[] |
-| `U` | `U` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `signals$` | { [P in string \| number \| symbol]: ReadonlySignal<T[P]\> } | an array of signals. |
-| `transform` | (`data`: { [P in string \| number \| symbol]: undefined \| T[P] }) => `U` | a transformation function that takes an array of changes (see [mergeSignals](README.md#mergesignals)). |
-
-#### Returns
-
-[`ReadonlySignal`](README.md#readonlysignal)<`U`\>
-
-a new signal.
-
-#### Defined in
-
-[composition.ts:115](https://github.com/cdellacqua/signals.js/blob/main/src/lib/composition.ts#L115)
+[composition.ts:19](https://github.com/cdellacqua/signals.js/blob/main/src/lib/composition.ts#L19)
 
 ___
 
@@ -269,47 +224,3 @@ a signal.
 #### Defined in
 
 [index.ts:48](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L48)
-
-___
-
-### mergeSignals
-
-▸ **mergeSignals**<`T`\>(`signals$`): [`ReadonlySignal`](README.md#readonlysignal)<`unknown`[] & { [P in keyof T]: T[P] \| undefined }\>
-
-Create a new signal that observes all the passed signals.
-The merged signal will emit each time one of the passed signals emit,
-sending an array of changes to all subscribers, that is
-an array filled with undefined except for the position
-corresponding to the signal that emitted last.
-
-Example:
-```ts
-const year$ = makeSignal<number>();
-const month$ = makeSignal<string>();
-const merged$ = mergeSignals([year$, month$]);
-merged$.subscribe(([year, month]) => console.log(`${month} ${year}`));
-year$.emit(2020); // undefined 2020
-month$.emit('July'); // July undefined
-```
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `unknown`[] |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `signals$` | { [P in string \| number \| symbol]: ReadonlySignal<T[P]\> } | array of signals to observe. |
-
-#### Returns
-
-[`ReadonlySignal`](README.md#readonlysignal)<`unknown`[] & { [P in keyof T]: T[P] \| undefined }\>
-
-a signal that will emit the observed changes in the signal array.
-
-#### Defined in
-
-[composition.ts:22](https://github.com/cdellacqua/signals.js/blob/main/src/lib/composition.ts#L22)
