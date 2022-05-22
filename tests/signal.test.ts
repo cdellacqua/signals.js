@@ -48,39 +48,6 @@ describe('signal', () => {
 		signal$.emit(10);
 		expect(count).to.eq(1);
 	});
-	it('adds two subscribers, but only one gets notified', () => {
-		const signal$ = makeSignal<number>();
-		let actual1 = -1;
-		let actual2 = -1;
-		const sub1 = (v: number) => {
-			actual1 = v;
-		};
-		const sub2 = (v: number) => {
-			actual2 = v;
-		};
-		signal$.subscribe(sub1);
-		signal$.subscribe(sub2);
-		signal$.emitFor(sub2, 10);
-		expect(actual1).to.eq(-1);
-		expect(actual2).to.eq(10);
-	});
-	it('adds two subscribers and uses emitFor after unsubscribe', () => {
-		const signal$ = makeSignal<number>();
-		let actual1 = -1;
-		let actual2 = -1;
-		const sub1 = (v: number) => {
-			actual1 = v;
-		};
-		const sub2 = (v: number) => {
-			actual2 = v;
-		};
-		signal$.subscribe(sub1);
-		const unsub2 = signal$.subscribe(sub2);
-		unsub2();
-		signal$.emitFor(sub2, 10);
-		expect(actual1).to.eq(-1);
-		expect(actual2).to.eq(-1);
-	});
 	it('adds two subscribers and unsubscribes the second one after one notification', () => {
 		const signal$ = makeSignal<number>();
 		let actual1 = -1;

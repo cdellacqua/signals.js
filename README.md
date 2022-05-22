@@ -29,7 +29,6 @@ input.changed.subscribe((e) => console.log(e));
 
 - `subscribe(subscriber)`, to attach listeners;
 - `emit(value)`, to emit a value to all subscribers;
-- `emitFor(subscriber, value)`, to emit a value to a specific subscriber;
 
 When you subscribe to a signal, you get a unsubscribe function, e.g.:
 ```ts
@@ -140,9 +139,9 @@ signal$.emit(3); // will trigger console.log, echoing 103
 ## Readonly signal
 
 When you coalesce or derive a signal, you get back a `ReadonlySignal<T>`.
-This type lacks the `emit` and `emitFor` methods.
+This type lacks the `emit` method.
 
-A `Signal<T>` is in fact an extension of a `ReadonlySignal<T>` that adds the aforementioned methods.
+A `Signal<T>` is in fact an extension of a `ReadonlySignal<T>` that adds the `emit` method.
 
 As a rule of thumb, it is preferable to pass around `ReadonlySignal<T>`s,
 to better encapsulate your signals and prevent unwanted `emit`s.

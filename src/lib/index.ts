@@ -27,12 +27,6 @@ export type Signal<T> = ReadonlySignal<T> & {
 	 * @param v the value to emit.
 	 */
 	emit(v: T): void;
-	/**
-	 * Emit a value to a specific subscriber of this signal.
-	 * @param subscriber the subscriber that will receive the value.
-	 * @param v the value to emit.
-	 */
-	emitFor(subscriber: Subscriber<T>, v: T): void;
 };
 
 /**
@@ -57,12 +51,6 @@ export function makeSignal<T>(): Signal<T> {
 			subscriber(v);
 		}
 	}
-	function emitFor(subscriber: Subscriber<T>, v: T) {
-		const index = subscribers.indexOf(subscriber);
-		if (index !== -1) {
-			subscriber(v);
-		}
-	}
 	function unsubscribe(subscriber: Subscriber<T>) {
 		const index = subscribers.indexOf(subscriber);
 		if (index !== -1) {
@@ -80,7 +68,6 @@ export function makeSignal<T>(): Signal<T> {
 
 	return {
 		emit,
-		emitFor,
 		subscribe,
 		get nOfSubscriptions() {
 			return subscribers.length;
