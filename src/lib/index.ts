@@ -15,6 +15,12 @@ export type ReadonlySignal<T> = {
 	 */
 	subscribe(subscriber: Subscriber<T>): Unsubscribe;
 	/**
+	 * Subscribe a function to this signal and automatically unsubscribe it after one emit occurs.
+	 *
+	 * @param subscriber a function that will be called when this signal emits.
+	 */
+	subscribeOnce(subscriber: Subscriber<T>): Unsubscribe;
+	/**
 	 * Return the current number of active subscriptions.
 	 */
 	get nOfSubscriptions(): number;
@@ -65,10 +71,21 @@ export function makeSignal<T>(): Signal<T> {
 
 		return () => unsubscribe(subscriber);
 	}
+	function subscribeOnce(subscriber: Subscriber<T>) {
+		const unsubscribeWrapper = subscribe((v) => {
+			// this must happen first to let the subscriber
+			// know that it has already been removed from this signal
+			// (this is used for example in composition.ts).
+			unsubscribeWrapper();
+			subscriber(v);
+		});
+		return unsubscribeWrapper;
+	}
 
 	return {
 		emit,
 		subscribe,
+		subscribeOnce,
 		get nOfSubscriptions() {
 			return subscribers.length;
 		},

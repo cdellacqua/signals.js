@@ -12,6 +12,15 @@ describe('examples', () => {
 		signal$.emit(42); // won't do anything
 		expect(calls).to.eq(1);
 	});
+	it('readme 1-alt', () => {
+		const signal$ = makeSignal<number>();
+		let actual = -1;
+		signal$.subscribeOnce((v) => (actual = v));
+		signal$.emit(3.14); // will trigger console.log, printing 3.14
+		expect(actual).to.eq(3.14);
+		signal$.emit(42); // won't do anything
+		expect(actual).to.eq(3.14);
+	});
 	it('readme 2', () => {
 		const signal$ = makeSignal<number>();
 		expect(signal$.nOfSubscriptions).to.eq(0); // 0

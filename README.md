@@ -27,8 +27,9 @@ input.changed.subscribe((e) => console.log(e));
 
 `Signal<T>` provides methods such as:
 
-- `subscribe(subscriber)`, to attach listeners;
 - `emit(value)`, to emit a value to all subscribers;
+- `subscribe(subscriber)`, to attach listeners;
+- `subscribeOnce(subscriber)`, to attach listeners for a single `emit` call;
 
 When you subscribe to a signal, you get a unsubscribe function, e.g.:
 ```ts
@@ -38,6 +39,16 @@ const signal$ = makeSignal<number>();
 const unsubscribe = signal$.subscribe((v) => console.log(v));
 signal$.emit(3.14); // will trigger console.log, printing 3.14
 unsubscribe();
+signal$.emit(42); // won't do anything
+```
+
+The above code can be rewritten with `subscribeOnce`:
+```ts
+import {makeSignal} from '@cdellacqua/signals';
+
+const signal$ = makeSignal<number>();
+signal$.subscribeOnce((v) => console.log(v));
+signal$.emit(3.14); // will trigger console.log, printing 3.14
 signal$.emit(42); // won't do anything
 ```
 

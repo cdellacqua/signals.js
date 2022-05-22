@@ -31,4 +31,37 @@ describe('derive', () => {
 		expect(signal$.nOfSubscriptions).to.eq(0);
 		expect(derived$.nOfSubscriptions).to.eq(0);
 	});
+	it('tests subscribe once', () => {
+		const signal$ = makeSignal<number>();
+		const derived$ = deriveSignal(signal$, (n) => n + 100);
+		expect(derived$.nOfSubscriptions).to.eq(0);
+		expect(signal$.nOfSubscriptions).to.eq(0);
+		let actual = -1;
+		derived$.subscribeOnce((v) => (actual = v));
+		expect(actual).to.eq(-1);
+		expect(derived$.nOfSubscriptions).to.eq(1);
+		expect(signal$.nOfSubscriptions).to.eq(1);
+		signal$.emit(10);
+		expect(actual).to.eq(110);
+		expect(derived$.nOfSubscriptions).to.eq(0);
+		expect(signal$.nOfSubscriptions).to.eq(0);
+	});
+	it('unsubscribes from subscribeOnce before emitting', () => {
+		const signal$ = makeSignal<number>();
+		const derived$ = deriveSignal(signal$, (n) => n + 100);
+		expect(derived$.nOfSubscriptions).to.eq(0);
+		expect(signal$.nOfSubscriptions).to.eq(0);
+		let actual = -1;
+		const unsubscribe = derived$.subscribeOnce((v) => (actual = v));
+		expect(actual).to.eq(-1);
+		expect(derived$.nOfSubscriptions).to.eq(1);
+		expect(signal$.nOfSubscriptions).to.eq(1);
+		unsubscribe();
+		expect(derived$.nOfSubscriptions).to.eq(0);
+		expect(signal$.nOfSubscriptions).to.eq(0);
+		signal$.emit(10);
+		expect(actual).to.eq(-1);
+		expect(derived$.nOfSubscriptions).to.eq(0);
+		expect(signal$.nOfSubscriptions).to.eq(0);
+	});
 });

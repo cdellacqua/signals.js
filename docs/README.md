@@ -37,6 +37,7 @@ A signal that can have subscribers and emit values to them.
 | :------ | :------ |
 | ``get` **nOfSubscriptions**(): `number`` | `Object` |
 | `subscribe` | (`subscriber`: [`Subscriber`](README.md#subscriber)<`T`\>) => [`Unsubscribe`](README.md#unsubscribe) |
+| `subscribeOnce` | (`subscriber`: [`Subscriber`](README.md#subscriber)<`T`\>) => [`Unsubscribe`](README.md#unsubscribe) |
 
 #### Defined in
 
@@ -58,7 +59,7 @@ A signal that can have subscribers and emit values to them.
 
 #### Defined in
 
-[index.ts:24](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L24)
+[index.ts:30](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L30)
 
 ___
 
@@ -151,7 +152,7 @@ a new signal that emits whenever one of the source signals emits.
 
 #### Defined in
 
-[composition.ts:64](https://github.com/cdellacqua/signals.js/blob/main/src/lib/composition.ts#L64)
+[composition.ts:77](https://github.com/cdellacqua/signals.js/blob/main/src/lib/composition.ts#L77)
 
 ___
 
@@ -228,4 +229,4 @@ a signal.
 
 #### Defined in
 
-[index.ts:47](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L47)
+[index.ts:53](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L53)

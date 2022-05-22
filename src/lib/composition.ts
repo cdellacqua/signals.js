@@ -42,6 +42,19 @@ export function deriveSignal<T, U>(signal$: ReadonlySignal<T>, transform: (data:
 				handleUnsubscribe();
 			};
 		},
+		subscribeOnce: (s) => {
+			const unsubscribe = base$.subscribeOnce((v) => {
+				s(v);
+				handleUnsubscribe();
+			});
+			if (!unsubscribeOriginal) {
+				unsubscribeOriginal = signal$.subscribe(emitTransformed);
+			}
+			return () => {
+				unsubscribe();
+				handleUnsubscribe();
+			};
+		},
 	};
 }
 
@@ -79,6 +92,19 @@ export function coalesceSignals<T extends unknown[]>(signals$: {[P in keyof T]: 
 		},
 		subscribe: (s) => {
 			const unsubscribe = base$.subscribe(s);
+			if (!unsubscribeOriginals) {
+				unsubscribeOriginals = signals$.map((signal$) => (signal$ as ReadonlySignal<T[number]>).subscribe(emit));
+			}
+			return () => {
+				unsubscribe();
+				handleUnsubscribe();
+			};
+		},
+		subscribeOnce: (s) => {
+			const unsubscribe = base$.subscribeOnce((v) => {
+				s(v);
+				handleUnsubscribe();
+			});
 			if (!unsubscribeOriginals) {
 				unsubscribeOriginals = signals$.map((signal$) => (signal$ as ReadonlySignal<T[number]>).subscribe(emit));
 			}
