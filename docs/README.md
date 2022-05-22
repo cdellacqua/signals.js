@@ -46,7 +46,7 @@ ___
 
 ### Signal
 
-Ƭ **Signal**<`T`\>: [`ReadonlySignal`](README.md#readonlysignal)<`T`\> & { `emit`: (`v`: `T`) => `void` ; `emitFor`: (`subscriber`: [`Subscriber`](README.md#subscriber)<`T`\>, `v`: `T`) => `void`  }
+Ƭ **Signal**<`T`\>: [`ReadonlySignal`](README.md#readonlysignal)<`T`\> & { `emit`: (`v`: `T`) => `void`  }
 
 A signal that can have subscribers and emit values to them.
 
@@ -228,4 +228,4 @@ a signal.
 
 #### Defined in
 
-[index.ts:53](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L53)
+[index.ts:47](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L47)
