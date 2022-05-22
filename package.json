@@ -2,7 +2,7 @@
 	"name": "@cdellacqua/signals",
 	"camelCaseName": "signals",
 	"description": "A simple signal pattern implementation that enables reactive programming",
-	"version": "1.0.2",
+	"version": "2.0.0",
 	"type": "module",
 	"types": "dist/index.d.ts",
 	"main": "dist/index.cjs",
