@@ -1,11 +1,11 @@
-import {makeCachedSignal} from './lib';
+import {makeSignal} from './lib';
 
-const counter$ = makeCachedSignal(0);
+const random$ = makeSignal<number>();
 
-counter$.subscribe(console.log);
+random$.subscribe(console.log);
 
 const interval = setInterval(() => {
-	counter$.emit(counter$.lastEmitted + 1);
+	random$.emit(Math.random());
 }, 600);
 
 setTimeout(() => {

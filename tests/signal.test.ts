@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {makeSignal} from '../src/lib';
 
-describe('normal signal', () => {
+describe('signal', () => {
 	it('creates a signal', () => {
 		const signal$ = makeSignal<number>();
 		let actual = -1;
@@ -10,6 +10,15 @@ describe('normal signal', () => {
 		});
 		signal$.emit(10);
 		expect(actual).to.eq(10);
+	});
+	it('creates a void signal', () => {
+		const signal$ = makeSignal<void>();
+		let called = false;
+		signal$.subscribe(() => {
+			called = true;
+		});
+		signal$.emit();
+		expect(called).to.be.true;
 	});
 	it('adds two subscribers', () => {
 		const signal$ = makeSignal<number>();
@@ -113,53 +122,5 @@ describe('normal signal', () => {
 		expect(signal$.nOfSubscriptions).to.eq(1);
 		unsub3();
 		expect(signal$.nOfSubscriptions).to.eq(0);
-	});
-	it('clears all active subscriptions', () => {
-		const signal$ = makeSignal<number>();
-		expect(signal$.nOfSubscriptions).to.eq(0);
-		let actual = -1;
-		const sub1 = (v: number) => {
-			actual = v;
-		};
-		const sub2 = (v: number) => {
-			actual = v;
-		};
-		const sub3 = (v: number) => {
-			actual = v;
-		};
-		signal$.subscribe(sub1);
-		signal$.subscribe(sub2);
-		signal$.subscribe(sub3);
-		expect(signal$.nOfSubscriptions).to.eq(3);
-		signal$.clearSubscriptions();
-		expect(signal$.nOfSubscriptions).to.eq(0);
-		signal$.emit(10);
-		expect(actual).to.eq(-1);
-	});
-	it('subscribes to the number of subscriptions signal', () => {
-		const signal$ = makeSignal<number>();
-		let receivedNOfSubscriptions = -1;
-		signal$.nOfSubscriptions$.subscribe((n) => {
-			receivedNOfSubscriptions = n;
-		});
-		expect(signal$.nOfSubscriptions).to.eq(0);
-		expect(signal$.nOfSubscriptions$.lastEmitted).to.eq(signal$.nOfSubscriptions);
-		expect(receivedNOfSubscriptions).to.eq(signal$.nOfSubscriptions);
-		signal$.subscribe(() => undefined);
-		expect(signal$.nOfSubscriptions).to.eq(1);
-		expect(signal$.nOfSubscriptions$.lastEmitted).to.eq(signal$.nOfSubscriptions);
-		expect(receivedNOfSubscriptions).to.eq(signal$.nOfSubscriptions);
-		signal$.subscribe(() => undefined);
-		expect(signal$.nOfSubscriptions).to.eq(2);
-		expect(signal$.nOfSubscriptions$.lastEmitted).to.eq(signal$.nOfSubscriptions);
-		expect(receivedNOfSubscriptions).to.eq(signal$.nOfSubscriptions);
-		signal$.clearSubscriptions();
-		expect(signal$.nOfSubscriptions).to.eq(0);
-		expect(signal$.nOfSubscriptions$.lastEmitted).to.eq(signal$.nOfSubscriptions);
-		expect(receivedNOfSubscriptions).to.eq(signal$.nOfSubscriptions);
-		signal$.subscribe(() => undefined);
-		expect(signal$.nOfSubscriptions).to.eq(1);
-		expect(signal$.nOfSubscriptions$.lastEmitted).to.eq(signal$.nOfSubscriptions);
-		expect(receivedNOfSubscriptions).to.eq(signal$.nOfSubscriptions);
 	});
 });

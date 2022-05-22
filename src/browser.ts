@@ -1,16 +1,16 @@
-import {makeCachedSignal} from './lib';
+import {makeSignal} from './lib';
 
-const counter$ = makeCachedSignal(0);
+const random$ = makeSignal<number>();
 
 const span = document.createElement('span');
-counter$.subscribe((count) => {
-	span.innerText = String(count);
+random$.subscribe((random) => {
+	span.innerText = String(random);
 });
 
 const button = document.createElement('button');
-button.innerText = '+';
+button.innerText = 'random';
 button.addEventListener('click', () => {
-	counter$.emit(counter$.lastEmitted + 1);
+	random$.emit(Math.random());
 });
 
 document.body.appendChild(button);
