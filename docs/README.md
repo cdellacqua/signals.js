@@ -123,12 +123,12 @@ by any of the source signals.
 
 Example:
 ```ts
-const year$ = makeSignal<number>();
-const month$ = makeSignal<string>();
-const coalesced$ = coalesceSignals([year$, month$]);
-coalesced$.subscribe((v) => console.log(v));
-year$.emit(2020); // 2020
-month$.emit('July'); // July
+const lastUpdate1$ = makeSignal<number>();
+const lastUpdate2$ = makeSignal<number>();
+const latestUpdate$ = coalesceSignals([lastUpdate1$, lastUpdate2$]);
+latestUpdate$.subscribe((v) => console.log(v));
+lastUpdate1$.emit(1577923200000); // will log 1577923200000
+lastUpdate2$.emit(1653230659450); // will log 1653230659450
 ```
 
 #### Type parameters
@@ -208,6 +208,11 @@ Example usage:
 const signal$ = makeSignal<number>();
 signal$.emit(10);
 ```
+Example usage with no data:
+```ts
+const signal$ = makeSignal<void>();
+signal$.emit();
+```
 
 #### Type parameters
 
@@ -223,4 +228,4 @@ a signal.
 
 #### Defined in
 
-[index.ts:48](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L48)
+[index.ts:53](https://github.com/cdellacqua/signals.js/blob/main/src/lib/index.ts#L53)
