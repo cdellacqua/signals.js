@@ -28,8 +28,8 @@ input.changed.subscribe((e) => console.log(e));
 `Signal<T>` provides methods such as:
 
 - `emit(value)`, to emit a value to all subscribers;
-- `subscribe(subscriber)`, to attach listeners;
-- `subscribeOnce(subscriber)`, to attach listeners for a single `emit` call;
+- `subscribe(subscriber)`, to attach subscribers;
+- `subscribeOnce(subscriber)`, to attach subscribers for a single `emit` call.
 
 When you subscribe to a signal, you get a unsubscribe function, e.g.:
 ```ts
