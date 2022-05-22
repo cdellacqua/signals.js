@@ -41,8 +41,8 @@ unsubscribe();
 signal$.emit(42); // won't do anything
 ```
 
-`Signal<T>` also contains a getter that lets you know how many active subscriptions
-are active in a given moment (this could be useful if are trying to optimize your code).
+`Signal<T>` also contains a getter (`nOfSubscriptions`) that lets you know how many active subscriptions
+are active at a given moment (this could be useful if are trying to optimize your code).
 
 ```ts
 import {makeSignal} from '@cdellacqua/signals';
@@ -147,3 +147,13 @@ derived$.subscribe((v) => console.log(v));
 signal1$.emit(3); // will trigger console.log, echoing 3
 signal2$.emit(2); // will trigger console.log, echoing 5
 ```
+
+## Readonly signal
+
+When you merge, coalesce or derive a signal (or signals), you get back a `ReadonlySignal<T>`.
+This type lacks the `emit` and `emitFor` methods.
+
+A `Signal<T>` is in fact an extension of a `ReadonlySignal<T>` that adds the aforementioned methods.
+
+As a rule of thumb, it should be preferable to pass around `ReadonlySignal<T>`,
+to better encapsulate your signals and prevent unwanted `emit`s.
