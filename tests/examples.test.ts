@@ -50,6 +50,10 @@ describe('examples', () => {
 		const signal$ = makeSignal<number>();
 		signal$.emit(10);
 	});
+	it('void signal', () => {
+		const signal$ = makeSignal<void>();
+		signal$.emit();
+	});
 	it('derive', () => {
 		const signal$ = makeSignal<number>();
 		const derived$ = deriveSignal(signal$, (n) => n + 100);
@@ -59,14 +63,14 @@ describe('examples', () => {
 		expect(actual).to.eq(103);
 	});
 	it('coalesce', () => {
-		const year$ = makeSignal<number>();
-		const month$ = makeSignal<string>();
-		const coalesced$ = coalesceSignals([year$, month$]);
-		let actual: unknown;
-		coalesced$.subscribe((v) => (actual = v));
-		year$.emit(2020); // 2020
-		expect(actual).to.eq(2020);
-		month$.emit('July'); // July
-		expect(actual).to.eq('July');
+		const lastUpdate1$ = makeSignal<number>();
+		const lastUpdate2$ = makeSignal<number>();
+		const latestUpdate$ = coalesceSignals([lastUpdate1$, lastUpdate2$]);
+		let actual = 0;
+		latestUpdate$.subscribe((v) => (actual = v));
+		lastUpdate1$.emit(1577923200000); // will log 1577923200000
+		expect(actual).to.eq(1577923200000);
+		lastUpdate2$.emit(1653230659450); // will log 1653230659450
+		expect(actual).to.eq(1653230659450);
 	});
 });

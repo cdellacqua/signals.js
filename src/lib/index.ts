@@ -43,6 +43,11 @@ export type Signal<T> = ReadonlySignal<T> & {
  * const signal$ = makeSignal<number>();
  * signal$.emit(10);
  * ```
+ * Example usage with no data:
+ * ```ts
+ * const signal$ = makeSignal<void>();
+ * signal$.emit();
+ * ```
  * @returns a signal.
  */
 export function makeSignal<T>(): Signal<T> {

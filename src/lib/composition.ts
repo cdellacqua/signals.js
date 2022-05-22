@@ -51,12 +51,12 @@ export function deriveSignal<T, U>(signal$: ReadonlySignal<T>, transform: (data:
  *
  * Example:
  * ```ts
- * const year$ = makeSignal<number>();
- * const month$ = makeSignal<string>();
- * const coalesced$ = coalesceSignals([year$, month$]);
- * coalesced$.subscribe((v) => console.log(v));
- * year$.emit(2020); // 2020
- * month$.emit('July'); // July
+ * const lastUpdate1$ = makeSignal<number>();
+ * const lastUpdate2$ = makeSignal<number>();
+ * const latestUpdate$ = coalesceSignals([lastUpdate1$, lastUpdate2$]);
+ * latestUpdate$.subscribe((v) => console.log(v));
+ * lastUpdate1$.emit(1577923200000); // will log 1577923200000
+ * lastUpdate2$.emit(1653230659450); // will log 1653230659450
  * ```
  * @param signals$ an array of signals to observe.
  * @returns a new signal that emits whenever one of the source signals emits.
