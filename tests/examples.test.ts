@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {coalesceSignals, deriveSignal, deriveSignals, makeSignal, mergeSignals} from '../src/lib';
+import {coalesceSignals, deriveSignal, makeSignal} from '../src/lib';
 
 describe('examples', () => {
 	it('readme 1', () => {
@@ -50,17 +50,6 @@ describe('examples', () => {
 		const signal$ = makeSignal<number>();
 		signal$.emit(10);
 	});
-	it('merge', () => {
-		const year$ = makeSignal<number>();
-		const month$ = makeSignal<string>();
-		const merged$ = mergeSignals([year$, month$]);
-		let actual: unknown;
-		merged$.subscribe(([year, month]) => (actual = `${month} ${year}`));
-		year$.emit(2020); // undefined 2020
-		expect(actual).to.eq('undefined 2020');
-		month$.emit('July'); // July undefined
-		expect(actual).to.eq('July undefined');
-	});
 	it('derive', () => {
 		const signal$ = makeSignal<number>();
 		const derived$ = deriveSignal(signal$, (n) => n + 100);
@@ -68,19 +57,6 @@ describe('examples', () => {
 		derived$.subscribe((v) => (actual = v));
 		signal$.emit(3); // will trigger console.log, echoing 103
 		expect(actual).to.eq(103);
-	});
-	it('derive multi', () => {
-		const signal1$ = makeSignal<number>();
-		const signal2$ = makeSignal<number>();
-		let sum = 0;
-		const derived$ = deriveSignals([signal1$, signal2$], ([n1, n2]) => (sum += n1 ?? n2 ?? 0));
-		let actual = 0;
-		derived$.subscribe((v) => (actual = v));
-		signal1$.emit(3); // will trigger console.log, echoing 3
-		expect(actual).to.eq(3);
-		signal2$.emit(2); // will trigger console.log, echoing 5
-		expect(actual).to.eq(5);
-		expect(actual).to.eq(sum);
 	});
 	it('coalesce', () => {
 		const year$ = makeSignal<number>();

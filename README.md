@@ -42,7 +42,7 @@ signal$.emit(42); // won't do anything
 ```
 
 `Signal<T>` also contains a getter (`nOfSubscriptions`) that lets you know how many active subscriptions
-are active at a given moment (this could be useful if are trying to optimize your code).
+are active at a given moment (this could be useful if you are trying to optimize your code).
 
 ```ts
 import {makeSignal} from '@cdellacqua/signals';
@@ -55,8 +55,8 @@ console.log(signal$.nOfSubscriptions); // 0
 ```
 
 A nice feature of `Signal<T>` is that it deduplicates subscribers,
-that is you can't accidentally subscribe the same function more than
-once (just like the DOM addEventListener method):
+that is you can't accidentally add the same function more than
+once to the same signal (just like the DOM addEventListener method):
 ```ts
 import {makeSignal} from '@cdellacqua/signals';
 const signal$ = makeSignal<number>();
@@ -72,8 +72,8 @@ unsubscribe1(); // won't do anything, "subscriber" has already been removed
 console.log(signal$.nOfSubscriptions); // 0
 ```
 
-Of course there might be cases where you need to subscribe the same function
-more than once. That's still achievable by simply wrapping it inside an arrow function:
+If you ever needed to add the same function
+more than once you can still achieve that by simply wrapping it inside an arrow function:
 ```ts
 import {makeSignal} from '@cdellacqua/signals';
 const signal$ = makeSignal<number>();
@@ -89,24 +89,7 @@ unsubscribe1();
 console.log(signal$.nOfSubscriptions); // 0
 ```
 
-## Merge, coalesce and derive signals
-
-### Merging
-Merging two or more signals consists of creating a new signals
-that emits an array of changes.
-The array of changes has the same length as the array of source signals
-and it's filled with undefined except for the element
-at the index corresponding to the source signal that emitted last.
-
-Example:
-```ts
-const year$ = makeSignal<number>();
-const month$ = makeSignal<string>();
-const merged$ = mergeSignals([year$, month$]);
-merged$.subscribe(([year, month]) => console.log(`${month} ${year}`));
-year$.emit(2020); // undefined 2020
-month$.emit('July'); // July undefined
-```
+## Coalescing and deriving signals
 
 ### Coalescing
 
@@ -126,7 +109,7 @@ month$.emit('July'); // July
 
 ### Deriving
 
-Deriving a signal (or signals) consists of creating a new signal
+Deriving a signal consists of creating a new signal
 that emits a value mapped from the source signal.
 
 Example:
@@ -135,17 +118,6 @@ const signal$ = makeSignal<number>();
 const derived$ = deriveSignal(signal$, (n) => n + 100);
 derived$.subscribe((v) => console.log(v));
 signal$.emit(3); // will trigger console.log, echoing 103
-```
-
-Example with multiple signals:
-```ts
-const signal1$ = makeSignal<number>();
-const signal2$ = makeSignal<number>();
-let sum = 0;
-const derived$ = deriveSignals([signal1$, signal2$], ([n1, n2]) => sum += n1 ?? n2 ?? 0);
-derived$.subscribe((v) => console.log(v));
-signal1$.emit(3); // will trigger console.log, echoing 3
-signal2$.emit(2); // will trigger console.log, echoing 5
 ```
 
 ## Readonly signal
