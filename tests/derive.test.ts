@@ -46,6 +46,27 @@ describe('derive', () => {
 		expect(derived$.nOfSubscriptions).to.eq(0);
 		expect(signal$.nOfSubscriptions).to.eq(0);
 	});
+	it('tests calling subscribeOnce multiple times', () => {
+		const signal$ = makeSignal<number>();
+		const derived$ = deriveSignal(signal$, (n) => n + 100);
+		expect(derived$.nOfSubscriptions).to.eq(0);
+		expect(signal$.nOfSubscriptions).to.eq(0);
+		let calls = 0;
+		derived$.subscribeOnce(() => calls++);
+		derived$.subscribeOnce(() => calls++);
+		derived$.subscribeOnce(() => calls++);
+		derived$.subscribeOnce(() => calls++);
+		derived$.subscribeOnce(() => calls++);
+		derived$.subscribeOnce(() => calls++);
+		derived$.subscribeOnce(() => calls++);
+		derived$.subscribeOnce(() => calls++);
+		derived$.subscribeOnce(() => calls++);
+		expect(derived$.nOfSubscriptions).to.eq(9);
+		expect(signal$.nOfSubscriptions).to.eq(1);
+		signal$.emit(0);
+		expect(derived$.nOfSubscriptions).to.eq(0);
+		expect(signal$.nOfSubscriptions).to.eq(0);
+	});
 	it('unsubscribes from subscribeOnce before emitting', () => {
 		const signal$ = makeSignal<number>();
 		const derived$ = deriveSignal(signal$, (n) => n + 100);

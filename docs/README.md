@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Type aliases
+### Type Aliases
 
 - [ReadonlySignal](README.md#readonlysignal)
 - [Signal](README.md#signal)
@@ -17,7 +17,7 @@
 - [deriveSignal](README.md#derivesignal)
 - [makeSignal](README.md#makesignal)
 
-## Type aliases
+## Type Aliases
 
 ### ReadonlySignal
 
@@ -35,7 +35,7 @@ A signal that can have subscribers and emit values to them.
 
 | Name | Type |
 | :------ | :------ |
-| ``get` **nOfSubscriptions**(): `number`` | `Object` |
+| ``get` **nOfSubscriptions**(): `number`` | {} |
 | `subscribe` | (`subscriber`: [`Subscriber`](README.md#subscriber)<`T`\>) => [`Unsubscribe`](README.md#unsubscribe) |
 | `subscribeOnce` | (`subscriber`: [`Subscriber`](README.md#subscriber)<`T`\>) => [`Unsubscribe`](README.md#unsubscribe) |
 

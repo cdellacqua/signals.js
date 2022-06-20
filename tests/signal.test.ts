@@ -112,6 +112,23 @@ describe('signal', () => {
 		expect(actual).to.eq(10);
 		expect(signal$.nOfSubscriptions).to.eq(0);
 	});
+	it('tests calling subscribeOnce multiple times', () => {
+		const signal$ = makeSignal<void>();
+		expect(signal$.nOfSubscriptions).to.eq(0);
+		let calls = 0;
+		signal$.subscribeOnce(() => calls++);
+		signal$.subscribeOnce(() => calls++);
+		signal$.subscribeOnce(() => calls++);
+		signal$.subscribeOnce(() => calls++);
+		signal$.subscribeOnce(() => calls++);
+		signal$.subscribeOnce(() => calls++);
+		signal$.subscribeOnce(() => calls++);
+		signal$.subscribeOnce(() => calls++);
+		signal$.subscribeOnce(() => calls++);
+		expect(signal$.nOfSubscriptions).to.eq(9);
+		signal$.emit();
+		expect(signal$.nOfSubscriptions).to.eq(0);
+	});
 	it('unsubscribes from subscribeOnce before emitting', () => {
 		const signal$ = makeSignal<number>();
 		expect(signal$.nOfSubscriptions).to.eq(0);
