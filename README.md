@@ -23,6 +23,22 @@ input.changed.subscribe((e) => console.log(e));
 
 [Documentation](./docs/README.md)
 
+
+## Migrating to V5
+
+TL;DR: replace nOfSubscription to nOfSubscription().
+
+The only major change is the refactoring of nOfSubscription.
+In V1 it was a getter property, in V2 it's a function.
+
+This change is meant to prevent common pitfalls that occur when composing signals in custom objects. As an example, when using {...signal$, myCustomExtension() { /* my code */ } }, the
+object spread syntax would previously capture the current value returned by the
+getter, making the field a regular object property that couldn't update on its own.
+It's now possible to use the spread syntax, because it will capture the function
+instead of the current value.
+
+A positive side effect of this change is the reduced number of function calls necessary to reach the value hidden behind the getter (i.e. nOfSubscriptions doesn't need to be redefined as a getter in every composite object, it just needs to be a reference to the original function).
+
 ## Highlights
 
 `Signal<T>` provides methods such as:
@@ -59,11 +75,11 @@ are active at a given moment (this could be useful if you are trying to optimize
 import {makeSignal} from '@cdellacqua/signals';
 
 const signal$ = makeSignal<number>();
-console.log(signal$.nOfSubscriptions); // 0
+console.log(signal$.nOfSubscriptions()); // 0
 const unsubscribe = signal$.subscribe(() => undefined); // empty subscriber
-console.log(signal$.nOfSubscriptions); // 1
+console.log(signal$.nOfSubscriptions()); // 1
 unsubscribe();
-console.log(signal$.nOfSubscriptions); // 0
+console.log(signal$.nOfSubscriptions()); // 0
 ```
 
 A nice feature of `Signal<T>` is that it deduplicates subscribers,
@@ -74,15 +90,15 @@ import {makeSignal} from '@cdellacqua/signals';
 
 const signal$ = makeSignal<number>();
 const subscriber = (v: number) => console.log(v);
-console.log(signal$.nOfSubscriptions); // 0
+console.log(signal$.nOfSubscriptions()); // 0
 const unsubscribe1 = signal$.subscribe(subscriber);
 const unsubscribe2 = signal$.subscribe(subscriber);
 const unsubscribe3 = signal$.subscribe(subscriber);
-console.log(signal$.nOfSubscriptions); // 1
+console.log(signal$.nOfSubscriptions()); // 1
 unsubscribe3(); // will remove "subscriber"
 unsubscribe2(); // won't do anything, "subscriber" has already been removed
 unsubscribe1(); // won't do anything, "subscriber" has already been removed
-console.log(signal$.nOfSubscriptions); // 0
+console.log(signal$.nOfSubscriptions()); // 0
 ```
 
 If you ever needed to add the same function
@@ -92,15 +108,15 @@ import {makeSignal} from '@cdellacqua/signals';
 
 const signal$ = makeSignal<number>();
 const subscriber = (v: number) => console.log(v);
-console.log(signal$.nOfSubscriptions); // 0
+console.log(signal$.nOfSubscriptions()); // 0
 const unsubscribe1 = signal$.subscribe(subscriber);
-console.log(signal$.nOfSubscriptions); // 1
+console.log(signal$.nOfSubscriptions()); // 1
 const unsubscribe2 = signal$.subscribe((v) => subscriber(v));
-console.log(signal$.nOfSubscriptions); // 2
+console.log(signal$.nOfSubscriptions()); // 2
 unsubscribe2();
-console.log(signal$.nOfSubscriptions); // 1
+console.log(signal$.nOfSubscriptions()); // 1
 unsubscribe1();
-console.log(signal$.nOfSubscriptions); // 0
+console.log(signal$.nOfSubscriptions()); // 0
 ```
 
 You can also have a signal that just triggers its subscribers without passing

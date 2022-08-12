@@ -35,7 +35,7 @@ A signal that can have subscribers and emit values to them.
 
 | Name | Type |
 | :------ | :------ |
-| ``get` **nOfSubscriptions**(): `number`` | {} |
+| `nOfSubscriptions` | () => `number` |
 | `subscribe` | (`subscriber`: [`Subscriber`](README.md#subscriber)<`T`\>) => [`Unsubscribe`](README.md#unsubscribe) |
 | `subscribeOnce` | (`subscriber`: [`Subscriber`](README.md#subscriber)<`T`\>) => [`Unsubscribe`](README.md#unsubscribe) |
 
@@ -152,7 +152,7 @@ a new signal that emits whenever one of the source signals emits.
 
 #### Defined in
 
-[composition.ts:77](https://github.com/cdellacqua/signals.js/blob/main/src/lib/composition.ts#L77)
+[composition.ts:75](https://github.com/cdellacqua/signals.js/blob/main/src/lib/composition.ts#L75)
 
 ___
 

@@ -23,7 +23,7 @@ export type ReadonlySignal<T> = {
 	/**
 	 * Return the current number of active subscriptions.
 	 */
-	get nOfSubscriptions(): number;
+	nOfSubscriptions(): number;
 };
 
 /** A signal that can have subscribers and emit values to them. */
@@ -89,7 +89,7 @@ export function makeSignal<T>(): Signal<T> {
 		emit,
 		subscribe,
 		subscribeOnce,
-		get nOfSubscriptions() {
+		nOfSubscriptions() {
 			return subscribers.length;
 		},
 	};

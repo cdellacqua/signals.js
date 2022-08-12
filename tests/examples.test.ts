@@ -23,37 +23,37 @@ describe('examples', () => {
 	});
 	it('readme 2', () => {
 		const signal$ = makeSignal<number>();
-		expect(signal$.nOfSubscriptions).to.eq(0); // 0
+		expect(signal$.nOfSubscriptions()).to.eq(0); // 0
 		const unsubscribe = signal$.subscribe(() => undefined); // empty subscriber
-		expect(signal$.nOfSubscriptions).to.eq(1); // 1
+		expect(signal$.nOfSubscriptions()).to.eq(1); // 1
 		unsubscribe();
-		expect(signal$.nOfSubscriptions).to.eq(0); // 0
+		expect(signal$.nOfSubscriptions()).to.eq(0); // 0
 	});
 	it('readme 3', () => {
 		const signal$ = makeSignal<number>();
 		const subscriber = (v: number) => console.log(v);
-		expect(signal$.nOfSubscriptions).to.eq(0); // 0
+		expect(signal$.nOfSubscriptions()).to.eq(0); // 0
 		const unsubscribe1 = signal$.subscribe(subscriber);
 		const unsubscribe2 = signal$.subscribe(subscriber);
 		const unsubscribe3 = signal$.subscribe(subscriber);
-		expect(signal$.nOfSubscriptions).to.eq(1); // 1
+		expect(signal$.nOfSubscriptions()).to.eq(1); // 1
 		unsubscribe3(); // will remove "subscriber"
 		unsubscribe2(); // won't do anything, "subscriber" has already been removed
 		unsubscribe1(); // won't do anything, "subscriber" has already been removed
-		expect(signal$.nOfSubscriptions).to.eq(0); // 0
+		expect(signal$.nOfSubscriptions()).to.eq(0); // 0
 	});
 	it('readme 3', () => {
 		const signal$ = makeSignal<number>();
 		const subscriber = (v: number) => console.log(v);
-		expect(signal$.nOfSubscriptions).to.eq(0); // 0
+		expect(signal$.nOfSubscriptions()).to.eq(0); // 0
 		const unsubscribe1 = signal$.subscribe(subscriber);
-		expect(signal$.nOfSubscriptions).to.eq(1); // 1
+		expect(signal$.nOfSubscriptions()).to.eq(1); // 1
 		const unsubscribe2 = signal$.subscribe((v) => subscriber(v));
-		expect(signal$.nOfSubscriptions).to.eq(2); // 2
+		expect(signal$.nOfSubscriptions()).to.eq(2); // 2
 		unsubscribe2();
-		expect(signal$.nOfSubscriptions).to.eq(1); // 1
+		expect(signal$.nOfSubscriptions()).to.eq(1); // 1
 		unsubscribe1();
-		expect(signal$.nOfSubscriptions).to.eq(0); // 0
+		expect(signal$.nOfSubscriptions()).to.eq(0); // 0
 	});
 	it('signal', () => {
 		const signal$ = makeSignal<number>();
