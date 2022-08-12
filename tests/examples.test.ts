@@ -82,4 +82,21 @@ describe('examples', () => {
 		lastUpdate2$.emit(1653230659450); // will log 1653230659450
 		expect(actual).to.eq(1653230659450);
 	});
+	it('spread syntax', () => {
+		const baseSignal$ = makeSignal<number>();
+		const compositeSignal$ = {
+			...baseSignal$,
+			emitOne() {
+				baseSignal$.emit(1);
+			},
+		};
+		let actual = 0;
+		expect(compositeSignal$.nOfSubscriptions()).to.eq(0);
+		const unsubscribe = compositeSignal$.subscribe((v) => (actual = v));
+		compositeSignal$.emitOne();
+		expect(actual).to.eq(1);
+		expect(compositeSignal$.nOfSubscriptions()).to.eq(1);
+		unsubscribe();
+		expect(compositeSignal$.nOfSubscriptions()).to.eq(0);
+	});
 });
