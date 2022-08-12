@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {coalesceSignals, deriveSignal, makeSignal} from '../src/lib';
+import {coalesceSignals, deriveSignal, makeSignal, ReadonlySignal} from '../src/lib';
 
 describe('examples', () => {
 	it('readme 1', () => {
@@ -98,5 +98,32 @@ describe('examples', () => {
 		expect(compositeSignal$.nOfSubscriptions()).to.eq(1);
 		unsubscribe();
 		expect(compositeSignal$.nOfSubscriptions()).to.eq(0);
+	});
+	it('readme countdown', async () => {
+		const sleep = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
+
+		function makeCountdown(from: number): ReadonlySignal<number> & {run(): Promise<void>} {
+			const {subscribe, subscribeOnce, emit, nOfSubscriptions} = makeSignal<number>();
+			return {
+				subscribe,
+				subscribeOnce,
+				nOfSubscriptions,
+				async run() {
+					emit(from);
+					for (let i = from - 1; i >= 0; i--) {
+						await sleep(1);
+						emit(i);
+					}
+				},
+			};
+		}
+		const values: number[] = [];
+		const collect = (v: number) => values.push(v);
+		const countdown$ = makeCountdown(5);
+		countdown$.subscribe(collect);
+		let output = '';
+		await countdown$.run().then(() => (output = 'launch!')); // will trigger the above console.log 6 times, printing the numbers from 5 to 0.
+		expect(values).to.eqls([5, 4, 3, 2, 1, 0]);
+		expect(output).to.eq('launch!');
 	});
 });
