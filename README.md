@@ -26,9 +26,9 @@ input.changed.subscribe((e) => console.log(e));
 
 ## Migrating to V5
 
-TL;DR: replace nOfSubscription to nOfSubscription().
+TL;DR: replace nOfSubscriptions to nOfSubscriptions().
 
-The only major change is the refactoring of nOfSubscription.
+The only major change is the refactoring of nOfSubscriptions.
 In V1 it was a getter property, in V2 it's a function.
 
 This change is meant to prevent common pitfalls that occur when composing signals in custom objects. As an example, when using {...signal$, myCustomExtension() { /* my code */ } }, the
