@@ -29,7 +29,7 @@ input.changed.subscribe((e) => console.log(e));
 TL;DR: replace nOfSubscriptions to nOfSubscriptions().
 
 The only major change is the refactoring of nOfSubscriptions.
-In V1 it was a getter property, in V2 it's a function.
+Up until V4 it was a getter property, in V5 it's a function.
 
 This change is meant to prevent common pitfalls that occur when composing signals in custom objects. As an example, when using {...signal$, myCustomExtension() { /* my code */ } }, the
 object spread syntax would previously capture the current value returned by the
