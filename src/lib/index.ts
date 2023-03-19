@@ -53,10 +53,13 @@ export type Signal<T> = ReadonlySignal<T> & {
 export function makeSignal<T>(): Signal<T> {
 	const subscribers: Subscriber<T>[] = [];
 	function emit(v: T): void {
+		if (subscribers.length === 0) {
+			return;
+		}
 		// Create a snapshot of all subscribers before emitting,
 		// so that if subscriptions are added or removed
 		// they won't affect the current emit loop.
-		for (const subscriber of [...subscribers]) {
+		for (const subscriber of subscribers.slice()) {
 			subscriber(v);
 		}
 	}
