@@ -1,4 +1,4 @@
-import {makeSignal} from './lib';
+import {makeSignal} from './lib/index.js';
 
 const random$ = makeSignal<number>();
 

@@ -98,4 +98,4 @@ export function makeSignal<T>(): Signal<T> {
 	};
 }
 
-export * from './composition';
+export * from './composition.js';

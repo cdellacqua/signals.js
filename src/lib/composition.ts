@@ -1,4 +1,4 @@
-import {makeSignal, Subscriber, Unsubscribe, ReadonlySignal} from './index';
+import {makeSignal, Subscriber, Unsubscribe, ReadonlySignal} from './index.js';
 
 /**
  * Create a signal that emits whenever the passed signal emits. The original

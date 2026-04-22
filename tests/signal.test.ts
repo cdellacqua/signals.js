@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {makeSignal} from '../src/lib';
+import {makeSignal} from '../src/lib/index.js';
 
 describe('signal', () => {
 	it('creates a signal', () => {

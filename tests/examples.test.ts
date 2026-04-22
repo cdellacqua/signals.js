@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {coalesceSignals, deriveSignal, makeSignal, ReadonlySignal} from '../src/lib';
+import {coalesceSignals, deriveSignal, makeSignal, ReadonlySignal} from '../src/lib/index.js';
 
 describe('examples', () => {
 	it('readme 1', () => {

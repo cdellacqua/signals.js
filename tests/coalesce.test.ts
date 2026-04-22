@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {makeSignal, coalesceSignals} from '../src/lib';
+import {makeSignal, coalesceSignals} from '../src/lib/index.js';
 
 describe('coalesce', () => {
 	it('creates a coalesced signal', () => {

@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {deriveSignal, makeSignal} from '../src/lib';
+import {deriveSignal, makeSignal} from '../src/lib/index.js';
 
 describe('derive', () => {
 	it('creates a derived signal', () => {
