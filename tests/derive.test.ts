@@ -1,4 +1,3 @@
-import {expect} from 'chai';
 import {deriveSignal, makeSignal} from '../src/lib/index.js';
 
 describe('derive', () => {
