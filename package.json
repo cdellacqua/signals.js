@@ -20,7 +20,8 @@
 		"reactive"
 	],
 	"repository": {
-		"url": "git+https://github.com/cdellacqua/signals.js"
+		"type": "git",
+		"url": "git+https://github.com/cdellacqua/signals.js.git"
 	},
 	"bugs": {
 		"url": "https://github.com/cdellacqua/signals.js/issues"
